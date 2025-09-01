@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float jumpPower;
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
 
-    private bool canMove = true;
-    public int maxJumpCnt = 2;
-    public int jumpCnt;
-    /// <summary>
-    /// 피격시 무적시간
-    /// </summary>
-    public float ignoreTime = 10.0f;
-    bool ignore = false;
-    float curTime = 0;
-    private void Start()
+    [Header("PlayerSetting")]
+    [SerializeField] private float jumpPower;
+    [SerializeField] private int maxJumpCnt = 2;
+    [SerializeField] private int jumpCount;
+    [SerializeField] private float ignoreTime = 10.0f;
+
+    private bool isIgnore = false;
+    private bool isMove = true;
+    private float curTime = 0;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
@@ -25,48 +25,53 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(canMove)
-        {
-            Jumps();
-        }
-        if(ignore)
+        if (!isMove)
+            return;
+
+        CheckJump();
+
+        if (isIgnore)
             curTime += Time.deltaTime;
     }
+
+    private void CheckJump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCnt)
+            Jumps();
+    }
+
     private void Jumps()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCnt < maxJumpCnt)
-        {
-            Debug.Log("점프");
-            rb.velocity = Vector2.zero;
-            rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            jumpCnt++;
-        }
+        JumpAddForce(jumpPower);
+        jumpCount++;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        if (CheckObjectTigger(collision, "Ground"))
         {
-            jumpCnt = 0;
+            jumpCount = 0;
             Debug.Log("착지");
-
         }
-        if (collision.gameObject.tag == "enemy" || collision.gameObject.tag == "가시")
+        if (!CheckObjectTigger(collision, "Enemy") && !CheckObjectTigger(collision, "가시"))
+            return;
+
+        if (!isIgnore)
         {
-            if(!ignore)
-            {
-                Debug.Log("피해");
-                rb.velocity = Vector2.zero;
-                rb.AddForce(Vector2.up * jumpPower / 3, ForceMode2D.Impulse);
-                StartCoroutine(SpriteFlash(ignoreTime));
-            }
-
+            JumpAddForce(jumpPower / 3);
+            StartCoroutine(SpriteFlash(ignoreTime));
         }
+    }
+
+    private void JumpAddForce(float power)
+    {
+        rb.velocity = Vector2.zero;
+        rb.AddForce(Vector2.up * power, ForceMode2D.Impulse);
     }
 
     IEnumerator SpriteFlash( float ignoreTime )
     {
-        ignore = true;
+        isIgnore = true;
         while (curTime < ignoreTime)
         {
             sprite.color = new Color(1, 1, 1, sprite.color.a == 0.5f ? 1 : 0.5f);
@@ -74,6 +79,11 @@ public class PlayerController : MonoBehaviour
         }
         sprite.color = new Color(1f, 1f, 1f, 1f);
         curTime = 0;
-        ignore = false;
+        isIgnore = false;
+    }
+
+    private bool CheckObjectTigger(Collider2D collision, string name)
+    {
+        return collision.gameObject.CompareTag(name);
     }
 }

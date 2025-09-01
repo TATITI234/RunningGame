@@ -9,11 +9,11 @@ public class GroundController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
     private void Update()
     {
-        if(transform.position.x < -18)
+        if (transform.position.x < -18)
         {
             transform.position = new Vector2(18, transform.position.y);
         }
@@ -21,10 +21,10 @@ public class GroundController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(isMove)
+        if (isMove)
         {
             transform.Translate(new Vector2(-0.1f * speed, 0));
         }
-        
+
     }
 }
