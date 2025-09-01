@@ -4,21 +4,28 @@ using UnityEngine;
 
 public class AreaManager : MonoBehaviour
 {
-    List<GameObject> Areas;
+    public List<GameObject> Areas;
     public Vector2 targetPos;
+
+    GameObject area;
+
+
     void Start()
     {
-        
+        GenerateArea();
     }
 
     void Update()
     {
-        
+        if (area.transform.position.x <= 0)
+        {
+            GenerateArea();
+        }
     }
 
     public void GenerateArea()
     {
-        Instantiate(Areas[Random.Range(0, Areas.Count)], targetPos, Quaternion.identity);
+        area = Instantiate(Areas[Random.Range(0, Areas.Count)], targetPos, Quaternion.identity);
         
     }
 }
