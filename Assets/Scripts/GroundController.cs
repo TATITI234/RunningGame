@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GroundController : MonoBehaviour
 {
     [SerializeField] private float speed = 2;
     public bool isMove = true;
+
     void Start()
     {
 
@@ -17,6 +19,7 @@ public class GroundController : MonoBehaviour
         {
             transform.position = new Vector2(18, transform.position.y);
         }*/
+
     }
     void FixedUpdate()
     {

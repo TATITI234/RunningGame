@@ -93,6 +93,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -2659,7 +2672,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon Tile Set_127
+      name: Saw4
       rect:
         serializedVersion: 2
         x: 112
@@ -2680,7 +2693,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon Tile Set_128
+      name: Saw5
       rect:
         serializedVersion: 2
         x: 128
@@ -2701,7 +2714,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon Tile Set_129
+      name: Saw3
       rect:
         serializedVersion: 2
         x: 144
@@ -2722,7 +2735,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon Tile Set_130
+      name: Saw1
       rect:
         serializedVersion: 2
         x: 160
@@ -2743,7 +2756,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon Tile Set_131
+      name: Saw6
       rect:
         serializedVersion: 2
         x: 176
@@ -2764,7 +2777,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon Tile Set_132
+      name: Saw2
       rect:
         serializedVersion: 2
         x: 192
@@ -2826,13 +2839,7 @@ TextureImporter:
       Dungeon Tile Set_124: 1694389911
       Dungeon Tile Set_125: 896058902
       Dungeon Tile Set_126: -823363072
-      Dungeon Tile Set_127: -1337016462
-      Dungeon Tile Set_128: 1080505462
-      Dungeon Tile Set_129: 2071720406
       Dungeon Tile Set_13: -2053355713
-      Dungeon Tile Set_130: -175849622
-      Dungeon Tile Set_131: 1949861643
-      Dungeon Tile Set_132: 2045466493
       Dungeon Tile Set_14: 361028235
       Dungeon Tile Set_15: 2078481003
       Dungeon Tile Set_16: 195834419
@@ -2929,6 +2936,12 @@ TextureImporter:
       Dungeon Tile Set_99: 199073935
       Dungeon Tile Set_Ground: -1651664888
       Dungeon Tile Set_Nail: 1656926127
+      Saw1: -175849622
+      Saw2: 2045466493
+      Saw3: 2071720406
+      Saw4: -1337016462
+      Saw5: 1080505462
+      Saw6: 1949861643
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

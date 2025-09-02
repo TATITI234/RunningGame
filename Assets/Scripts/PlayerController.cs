@@ -6,21 +6,28 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    private Vector3 myScale;
 
     [Header("PlayerSetting")]
     [SerializeField] private float jumpPower;
     [SerializeField] private int maxJumpCnt = 2;
     [SerializeField] private int jumpCount;
-    [SerializeField] private float ignoreTime = 10.0f;
+    [SerializeField] private float ignoreTime = 2.0f;
+    [SerializeField] private float slideSize = 0.7f;
 
     private bool isIgnore = false;
     private bool isMove = true;
     private float curTime = 0;
+    private bool isCrouch = false;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+    }
+    private void Start()
+    {
+        myScale = transform.localScale;
     }
 
     private void Update()
@@ -29,6 +36,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         CheckJump();
+        CheckSlide();
 
         if (isIgnore)
             curTime += Time.deltaTime;
@@ -39,11 +47,38 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCnt)
             Jumps();
     }
+    private void CheckSlide()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) && jumpCount == 0)
+            Slide();
+        else
+            StandUp();
+
+    }
 
     private void Jumps()
     {
         JumpAddForce(jumpPower);
         jumpCount++;
+    }
+    private void Slide()
+    {
+        transform.localScale = new Vector3(1, myScale.y - slideSize, 1);
+        if(!isCrouch)
+        {
+            transform.Translate(0, -(slideSize / 2), 0);
+        }
+
+        isCrouch = true;
+    }
+    private void StandUp()
+    {
+        if (isCrouch)
+        {
+            transform.Translate(0, slideSize / 2, 0);
+        }
+        transform.localScale = myScale;
+        isCrouch = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

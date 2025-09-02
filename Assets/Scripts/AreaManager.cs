@@ -7,25 +7,32 @@ public class AreaManager : MonoBehaviour
     public List<GameObject> Areas;
     public Vector2 targetPos;
 
-    GameObject area;
+    private GameObject area;
+ 
+    public static AreaManager instance;
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
 
-
-    void Start()
+    }
+    private void Start()
     {
         GenerateArea();
     }
 
-    void Update()
+    private void Update()
     {
         if (area.transform.position.x <= 0)
         {
             GenerateArea();
         }
+
     }
 
     public void GenerateArea()
     {
         area = Instantiate(Areas[Random.Range(0, Areas.Count)], targetPos, Quaternion.identity);
-        
+
     }
 }
