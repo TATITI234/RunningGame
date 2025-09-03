@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private SpriteRenderer sprite;
+    private Animator animator;
+   [SerializeField] private SpriteRenderer sprite;
     private Vector3 myScale;
 
     [Header("PlayerSetting")]
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
     private void Start()
     {
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCnt)
             Jumps();
     }
+
     private void CheckSlide()
     {
         if (Input.GetKey(KeyCode.LeftControl) && jumpCount == 0)
@@ -58,9 +60,15 @@ public class PlayerController : MonoBehaviour
 
     private void Jumps()
     {
-        JumpAddForce(jumpPower);
+        animator.SetTrigger("Jump");
         jumpCount++;
     }
+
+    public void AddFoce()
+    {
+        JumpAddForce(jumpPower);
+    }
+
     private void Slide()
     {
         transform.localScale = new Vector3(1, myScale.y - slideSize, 1);
