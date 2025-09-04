@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class GroundController : MonoBehaviour
 {
-    [SerializeField] private float speed = 2;
-    public bool isMove = true;
 
     void Start()
     {
@@ -21,6 +19,9 @@ public class GroundController : MonoBehaviour
         }*/
 
     }
+    [SerializeField] private float speed = 2;
+    public bool isMove = true;
+
     void FixedUpdate()
     {
         if (isMove)
