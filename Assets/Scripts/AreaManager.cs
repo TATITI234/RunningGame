@@ -15,18 +15,22 @@ public class AreaManager : MonoBehaviour
     [SerializeField] private float speed = 2;   // 블록 스피드
     public bool isMove = true;  // 블록이 움직일 수 있는지 여부
 
-    private GameObject childObj;    // 
+    private GameObject beforeChildObj;
+    private GameObject afterChildObj;
 
+    public static AreaManager instance = null;
     private void Awake()
     {
-
+        if (instance == null)
+            instance = this;
     }
     private void Start()
     {
+
     }
 
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         MoveArea(areasPrefab);
 
@@ -38,14 +42,32 @@ public class AreaManager : MonoBehaviour
         {
             GenerateArea(areasPrefab);
         }
-
+        if (afterChildObj.transform.position.x <= (targetPos.x - 18))
+        {
+            ResetArea();
+        }
 
     }
-    // 블록 생성
+
+    // 생성할 블록 뽑기
+    public void SelectArea()
+    {
+        afterChildObj = Areas[Random.Range(0, Areas.Count)];
+    }
+
+    // 블록 생성 & 이전 블록 이동
     public void GenerateArea(GameObject area)
     {
-        area = Instantiate(Areas[Random.Range(0, Areas.Count)], targetPos, Quaternion.identity);
-        childObj = Areas[Random.Range(0, Areas.Count)]
+        afterChildObj.SetActive(true);
+
+    }
+
+    // 블록 초기화 및 위치 재설정
+    public void ResetArea()
+    {
+            beforeChildObj.SetActive(false);
+            beforeChildObj.transform.position = targetPos;
+            beforeChildObj = afterChildObj;
     }
 
     // 블록 움직임
@@ -55,6 +77,16 @@ public class AreaManager : MonoBehaviour
         {
             area.transform.Translate(new Vector2(-0.1f * speed, 0));
 
+        }
+    }
+
+    // 임의로 이동시키게 하기
+    public void Move(GameObject area)
+    {
+        if (isMove)
+        {
+            area.transform.Translate(new Vector2(-0.1f * speed, 0));
+            Destroy(area, 5.0f);
         }
     }
 }

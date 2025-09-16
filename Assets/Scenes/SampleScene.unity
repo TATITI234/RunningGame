@@ -1236,6 +1236,9 @@ MonoBehaviour:
   - {fileID: 4427816736525530086, guid: 28c7b2fe64f6dc744be5a35473818897, type: 3}
   - {fileID: 4427816736525530086, guid: 9218bf3d15659954c8b27a7458d07f2c, type: 3}
   targetPos: {x: 17.9, y: 0}
+  areasPrefab: {fileID: 0}
+  speed: 2
+  isMove: 1
 --- !u!4 &1841997380
 Transform:
   m_ObjectHideFlags: 0
@@ -1409,9 +1412,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 564836716}
+  - {fileID: 1841997380}
   - {fileID: 1428498031}
   - {fileID: 1513651679}
-  - {fileID: 1841997380}
   - {fileID: 1579883028}
   - {fileID: 107727408}
   - {fileID: 8523359961573702383}
