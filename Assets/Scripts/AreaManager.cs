@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // 블록 종류를 ㅈㄴ 많이 만들고 블록들을 한 오브젝트의 자식으로 둔 뒤
@@ -8,66 +9,64 @@ using UnityEngine;
 public class AreaManager : MonoBehaviour
 {
     public List<GameObject> Areas;  // 블록 종류
-    public Vector2 targetPos;   // 블록이 생성될 위치
-
-    public GameObject areasPrefab;  // 모든 종류 블록의 부모 프리팹
+    public Vector2 targetPos;   // 블록이 이동할 위치
 
     [SerializeField] private float speed = 2;   // 블록 스피드
     public bool isMove = true;  // 블록이 움직일 수 있는지 여부
 
-    private GameObject beforeChildObj;
-    private GameObject afterChildObj;
+    private GameObject ChildObj = null;    // 껐다 킬 오브젝트
 
-    public static AreaManager instance = null;
+    // public static AreaManager instance = null;
+
+
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        //if (instance == null)
+        //    instance = this;
+
     }
     private void Start()
     {
-
+        // 자식 오브젝트 배열에 저장하기
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Areas.Add(transform.GetChild(i).gameObject);
+        }
+        ChildObj = Areas[Random.Range(0, transform.childCount)];
     }
 
 
     private void FixedUpdate()
     {
-        MoveArea(areasPrefab);
+        MoveArea(transform.gameObject);  // 일정한 속도로 계속 이동
 
     }
 
     private void Update()
     {
-        if (areasPrefab.transform.position.x <= 0)
-        {
-            GenerateArea(areasPrefab);
-        }
-        if (afterChildObj.transform.position.x <= (targetPos.x - 18))
+        // 블록이 화면 뒤로 넘어가면 초기화 로직 실행
+        if (transform.position.x <= -17)
         {
             ResetArea();
         }
 
     }
 
-    // 생성할 블록 뽑기
+    // 생성할 블록 뽑기 & 활성화
     public void SelectArea()
     {
-        afterChildObj = Areas[Random.Range(0, Areas.Count)];
-    }
-
-    // 블록 생성 & 이전 블록 이동
-    public void GenerateArea(GameObject area)
-    {
-        afterChildObj.SetActive(true);
+        ChildObj = Areas[Random.Range(0, transform.childCount)];
+        ChildObj.SetActive(true);
 
     }
 
     // 블록 초기화 및 위치 재설정
     public void ResetArea()
     {
-            beforeChildObj.SetActive(false);
-            beforeChildObj.transform.position = targetPos;
-            beforeChildObj = afterChildObj;
+        ChildObj.SetActive(false);
+        transform.position = targetPos;
+
+        SelectArea();
     }
 
     // 블록 움직임
@@ -75,18 +74,9 @@ public class AreaManager : MonoBehaviour
     {
         if (isMove)
         {
-            area.transform.Translate(new Vector2(-0.1f * speed, 0));
+            transform.Translate(new Vector2(-0.1f * speed, 0));
 
         }
     }
 
-    // 임의로 이동시키게 하기
-    public void Move(GameObject area)
-    {
-        if (isMove)
-        {
-            area.transform.Translate(new Vector2(-0.1f * speed, 0));
-            Destroy(area, 5.0f);
-        }
-    }
 }
