@@ -11,7 +11,8 @@ public class AreaManager : MonoBehaviour
     public List<GameObject> Areas;  // 블록 종류
     public Vector2 targetPos;   // 블록이 이동할 위치
 
-    [SerializeField] private float speed = 2;   // 블록 스피드
+    
+    private float speed;   // 블록 스피드
     public bool isMove = true;  // 블록이 움직일 수 있는지 여부
 
     private GameObject ChildObj = null;    // 껐다 킬 오브젝트
@@ -33,6 +34,7 @@ public class AreaManager : MonoBehaviour
             Areas.Add(transform.GetChild(i).gameObject);
         }
         ChildObj = Areas[Random.Range(0, transform.childCount)];
+        
     }
 
 
@@ -72,10 +74,11 @@ public class AreaManager : MonoBehaviour
     // 블록 움직임
     private void MoveArea(GameObject area)
     {
+        speed = GameDataManager.Instance.speed;
+
         if (isMove)
         {
             transform.Translate(new Vector2(-0.1f * speed, 0));
-
         }
     }
 
