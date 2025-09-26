@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private float curTime = 0;
     private bool isCrouch = false;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
