@@ -11,13 +11,15 @@ public class PlayerController : MonoBehaviour
 
     [Header("PlayerSetting")]
     [SerializeField] private float jumpPower;
-    [SerializeField] private int maxJumpCnt = 2;
+    [SerializeField] private int maxJumpCnt;
     [SerializeField] private int jumpCount;
-    [SerializeField] private float ignoreTime = 2.0f;
-    [SerializeField] private float slideSize = 0.7f;
+    [SerializeField] private float ignoreTime;
+    [SerializeField] private float slideSize;
 
     private bool isIgnore = false;
     private bool isMove = true;
+    private bool isJumping = false;
+    private bool falling;
     private float curTime = 0;
     private bool isCrouch = false;
 
@@ -29,7 +31,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        myScale = transform.localScale;
+        myScale = transform.localScale; 
     }
 
     private void Update()
@@ -42,17 +44,33 @@ public class PlayerController : MonoBehaviour
 
         if (isIgnore)
             curTime += Time.deltaTime;
+
+        if (transform.GetComponent<Rigidbody2D>().velocity.y < 0.01f)
+        {
+            falling = true;
+            //Debug.Log(falling);
+        }
+        else
+        {
+            falling = false;
+            //Debug.Log(falling);
+
+        }
     }
 
     private void CheckJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCnt)
+        {
+            isJumping = true;
             Jumps();
+        }
+            
     }
 
     private void CheckSlide()
     {
-        if (Input.GetKey(KeyCode.LeftControl) && jumpCount == 0)
+        if (Input.GetKey(KeyCode.LeftControl) && jumpCount == 0 && !isJumping)
             Slide();
         else
             StandUp();
@@ -63,6 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetTrigger("Jump");
         jumpCount++;
+
     }
 
     public void AddFoce()
@@ -72,30 +91,33 @@ public class PlayerController : MonoBehaviour
 
     private void Slide()
     {
-        transform.localScale = new Vector3(1, myScale.y - slideSize, 1);
+        
         if(!isCrouch)
         {
-            transform.Translate(0, -(slideSize / 2), 0);
+            transform.localScale = new Vector3(1, myScale.y - slideSize, 1);
+            transform.Translate(0, -slideSize / 2, 0);
+            isCrouch = true;
         }
-
-        isCrouch = true;
+        
     }
     private void StandUp()
     {
         if (isCrouch)
         {
             transform.Translate(0, slideSize / 2, 0);
+            transform.localScale = myScale;
+            isCrouch = false;
         }
-        transform.localScale = myScale;
-        isCrouch = false;
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (CheckObjectTigger(collision, "Ground"))
+        if (CheckObjectTigger(collision, "Ground") && falling)
         {
             jumpCount = 0;
             Debug.Log("ÂøÁö");
+            isJumping = false;
         }
         if (!CheckObjectTigger(collision, "Enemy") && !CheckObjectTigger(collision, "°¡½Ã"))
             return;
