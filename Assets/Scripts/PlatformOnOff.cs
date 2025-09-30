@@ -38,7 +38,7 @@ public class PlatformOnOff : MonoBehaviour
         }
         // 플레이어의 발바닥 위치가 플랫폼보다 높으면 콜라이더를 활성화시키기
         if (Player.position.y - (Player.transform.GetComponent<BoxCollider2D>().size.y / 2)
-            + 0.1f >= transform.position.y + (transform.localScale.y / 2) 
+            + 0.1f >= transform.position.y// + (transform.localScale.y / 2) // 빠른 속도로 떨어질 때 순간적으로 오브젝트를 뚫어서 보정값을 줌
             && falling)
         {
             transform.GetComponent<Collider2D>().enabled = true;
