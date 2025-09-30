@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxJumpCnt;
     [SerializeField] private int jumpCount;
     [SerializeField] private float ignoreTime;
-    [SerializeField] private float slideSize;
+    [SerializeField] private float slideMinusSize;
 
     private bool isIgnore = false;
     private bool isMove = true;
@@ -94,8 +94,8 @@ public class PlayerController : MonoBehaviour
         
         if(!isCrouch)
         {
-            transform.localScale = new Vector3(1, myScale.y - slideSize, 1);
-            transform.Translate(0, -slideSize / 2, 0);
+            transform.localScale = new Vector3(1, myScale.y - slideMinusSize, 1);
+            transform.Translate(0, -slideMinusSize / 2, 0);
             isCrouch = true;
         }
         
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isCrouch)
         {
-            transform.Translate(0, slideSize / 2, 0);
+            transform.Translate(0, slideMinusSize / 2, 0);
             transform.localScale = myScale;
             isCrouch = false;
         }
