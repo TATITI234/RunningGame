@@ -47,7 +47,7 @@ public class AreaManager : MonoBehaviour
     private void Update()
     {
         // 블록이 화면 뒤로 넘어가면 초기화 로직 실행
-        if (transform.position.x <= -17)
+        if (transform.position.x <= -18)
         {
             ResetArea();
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -56,6 +57,8 @@ public class PlayerController : MonoBehaviour
             //Debug.Log(falling);
 
         }
+        // Á¡ÇÁ Ä«¿îÆ® µð¹ö±ë ¾Ã
+        DebugingJump();
     }
 
     private void CheckJump()
@@ -124,7 +127,7 @@ public class PlayerController : MonoBehaviour
 
         if (!isIgnore)
         {
-            JumpAddForce(jumpPower / 3);
+            // JumpAddForce(jumpPower / 3);
             StartCoroutine(SpriteFlash(ignoreTime));
         }
     }
@@ -151,5 +154,11 @@ public class PlayerController : MonoBehaviour
     private bool CheckObjectTigger(Collider2D collision, string name)
     {
         return collision.gameObject.CompareTag(name);
+    }
+    public Text jmpCntTxt;
+    private void DebugingJump()
+    {
+        jmpCntTxt.text = jumpCount.ToString();
+
     }
 }
