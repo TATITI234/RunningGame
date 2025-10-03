@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         if (isIgnore)
             curTime += Time.deltaTime;
 
-        if (transform.GetComponent<Rigidbody2D>().velocity.y < 0.01f)
+        if (transform.GetComponent<Rigidbody2D>().velocity.y < 0f)
         {
             falling = true;
             //Debug.Log(falling);
@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCnt)
         {
             isJumping = true;
+            falling = false;
             Jumps();
         }
             
@@ -127,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
         if (!isIgnore)
         {
-            // JumpAddForce(jumpPower / 3);
+            JumpAddForce(jumpPower / 3);
             StartCoroutine(SpriteFlash(ignoreTime));
         }
     }

@@ -10,7 +10,7 @@ public class AreaManager : MonoBehaviour
 {
     public List<GameObject> Areas;  // 블록 종류
     public Vector2 targetPos;   // 블록이 이동할 위치
-
+    [SerializeField]private GameObject jellyGenerator;
     
     private float speed;   // 블록 스피드
     public bool isMove = true;  // 블록이 움직일 수 있는지 여부
@@ -34,7 +34,8 @@ public class AreaManager : MonoBehaviour
             Areas.Add(transform.GetChild(i).gameObject);
         }
         ChildObj = Areas[Random.Range(0, transform.childCount)];
-        
+
+        jellyGenerator = ChildObj.transform.GetComponentInChildren<JellyGenerator>().gameObject;
     }
 
 
@@ -49,6 +50,8 @@ public class AreaManager : MonoBehaviour
         // 블록이 화면 뒤로 넘어가면 초기화 로직 실행
         if (transform.position.x <= -18)
         {
+            jellyGenerator.SendMessage("DestroyCoin", SendMessageOptions.DontRequireReceiver);
+
             ResetArea();
         }
 
@@ -59,6 +62,7 @@ public class AreaManager : MonoBehaviour
     {
         ChildObj = Areas[Random.Range(0, transform.childCount)];
         ChildObj.SetActive(true);
+        jellyGenerator.SendMessage("GenerateCoin", SendMessageOptions.DontRequireReceiver);
 
     }
 
