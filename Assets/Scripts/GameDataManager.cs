@@ -12,7 +12,11 @@ public class GameDataManager : MonoBehaviour
     }
 
     public float speed = 2;   // 블록 스피드
+<<<<<<< Updated upstream
     public GameObject Jellys;
+=======
+    public float blockSize = 18;    // 블록의 크기
+>>>>>>> Stashed changes
 
     public List<GameObject> jellyObj = new List<GameObject>();
     private void Start()
