@@ -37,6 +37,6 @@ public class BGController : MonoBehaviour
         {
             BG.transform.localPosition = defaultPos;
         }
-        BG.transform.Translate(-0.1f * speed * moveSpeed * Time.deltaTime, 0, 0);
+        BG.transform.Translate(-0.01f * speed * moveSpeed * 50 * Time.deltaTime, 0, 0);
     }
 }

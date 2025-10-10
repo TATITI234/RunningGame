@@ -10,16 +10,23 @@ public class GroundController : MonoBehaviour
     {
 
     }
+    private void Update()
+    {
+        /*
+        if (transform.position.x < -18)
+        {
+            transform.position = new Vector2(18, transform.position.y);
+        }*/
 
+    }
+    [SerializeField] private float speed = 2;
     public bool isMove = true;
 
-    void Update()
+    void FixedUpdate()
     {
-        float speed = GameDataManager.Instance.speed;
-
         if (isMove)
         {
-            transform.Translate(new Vector2(-Time.deltaTime * speed, 0));
+            transform.Translate(new Vector2(-0.1f * speed, 0));
         }
 
     }
