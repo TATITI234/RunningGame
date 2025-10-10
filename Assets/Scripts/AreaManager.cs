@@ -15,16 +15,10 @@ using UnityEngine;
  */
 public class AreaManager : MonoBehaviour
 {
-<<<<<<< Updated upstream
-    public List<GameObject> Areas;  // 블록 종류
-    public Vector2 targetPos;   // 블록이 이동할 위치
-    [SerializeField]private GameObject jellyGenerator;
-=======
     public GameObject cycleBlock1;  // 순환블록
     public GameObject cycleBlock2;
     public List<GameObject> Areas1 = new();  // 뽑기할 Area들을 저장할 배열
     public List<GameObject> Areas2 = new();  
->>>>>>> Stashed changes
     
     private float speed;   // 블록 스피드
     public bool isMove = true;  // 블록이 움직일 수 있는지 여부
@@ -44,15 +38,11 @@ public class AreaManager : MonoBehaviour
     private void Start()
     {
 
-<<<<<<< Updated upstream
-        jellyGenerator = ChildObj.transform.GetComponentInChildren<JellyGenerator>().gameObject;
-=======
         // 자식 오브젝트 배열에 저장하기
         SetChild(cycleBlock1, Areas1);
         SetChild(cycleBlock2, Areas2);
         ChildObj1 = GetRandomChild(Areas1);
         ChildObj2 = GetRandomChild(Areas2);
->>>>>>> Stashed changes
     }
 
     // cycleBlock과 Areas를 인수로 받아 자식 오브젝트로 상속
@@ -77,31 +67,13 @@ public class AreaManager : MonoBehaviour
     private void Update()
     {
         // 블록이 화면 뒤로 넘어가면 초기화 로직 실행
-<<<<<<< Updated upstream
-        if (transform.position.x <= -18)
-        {
-            jellyGenerator.SendMessage("DestroyCoin", SendMessageOptions.DontRequireReceiver);
-
-            ResetArea();
-        }
-
-    }
-
-    // 생성할 블록 뽑기 & 활성화
-    public void SelectArea()
-    {
-        ChildObj = Areas[Random.Range(0, transform.childCount)];
-        ChildObj.SetActive(true);
-        jellyGenerator.SendMessage("GenerateCoin", SendMessageOptions.DontRequireReceiver);
-=======
         ResetArea(cycleBlock1, Areas1, ref ChildObj1);
         ResetArea(cycleBlock2, Areas2, ref ChildObj2);
 
         MoveArea(cycleBlock1);  // 일정한 속도로 계속 이동
         MoveArea(cycleBlock2);
->>>>>>> Stashed changes
-
     }
+
 
     // 블록 초기화 및 위치 재설정
     public void ResetArea(GameObject cycleBlock, List<GameObject> Areas, ref GameObject ChildObj)
