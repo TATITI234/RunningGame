@@ -14,8 +14,4 @@ public class GameDataManager : MonoBehaviour
     public float speed = 2;   // 블록 스피드
     public float blockSize = 20;   // 블록 크기 
 
-    private void Start()
-    {
-
-    }
 }
