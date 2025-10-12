@@ -49,6 +49,8 @@ public class CycleBlockController : MonoBehaviour
     public void SelectArea()
     {
         childObj = GetRandomChild(areas);
+        PatternController PC = childObj.GetComponentInChildren<PatternController>();
+        PC.ResetSign();
         childObj.SetActive(true);
 
     }
