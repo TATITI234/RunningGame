@@ -46,11 +46,11 @@ public class CycleBlockController : MonoBehaviour
     }
 
     // »ý¼ºÇÒ ºí·Ï »Ì±â & È°¼ºÈ­
-    public void SelectArea()
+    public void SelectArea()// ¹¹ ¾îÂ¼¶ó°í
     {
         childObj = GetRandomChild(areas);
-        PatternController PC = childObj.GetComponentInChildren<PatternController>();
-        PC.ResetSign();
+        GameObject Pattern = childObj.GetComponentInChildren<JellyPos>(true).gameObject;
+        Pattern.SetActive(true);
         childObj.SetActive(true);
 
     }
