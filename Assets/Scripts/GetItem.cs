@@ -7,6 +7,7 @@ public class GetItem : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Vector2 originPos;
+
     [SerializeField]private float boundPower;
 
     private void Awake()
@@ -44,12 +45,13 @@ public class GetItem : MonoBehaviour
     // 아이템 튀어오름
     private void ItemAddForce(float power)
     {
+        
         transform.GetComponent<Collider2D>().enabled = false;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 2;
         rb.AddForce(Vector2.up * power, ForceMode2D.Impulse);
         rb.AddForce(Vector2.right * Random.Range(-1,1), ForceMode2D.Impulse);
-        
+        GameDataManager.Instance.score++;
     }
 
 }

@@ -126,7 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jellys: []
-  jellyPos: []
 --- !u!1 &7586438670867743242
 GameObject:
   m_ObjectHideFlags: 0
