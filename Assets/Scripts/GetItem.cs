@@ -7,7 +7,7 @@ public class GetItem : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Vector2 originPos;
-
+    bool isCollided = false;
     [SerializeField]private float boundPower;
 
     private void Awake()
@@ -23,10 +23,13 @@ public class GetItem : MonoBehaviour
         transform.GetComponent<Collider2D>().enabled = true;
     }
 
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if(collision.CompareTag("Player") && !isCollided)
         {
+            isCollided = true;
+            AddScore();
             originPos = transform.localPosition;
             ItemAddForce(boundPower);
         }
@@ -36,12 +39,16 @@ public class GetItem : MonoBehaviour
     {
         if(transform.position.y <= -5.5f)
         {
+            isCollided = false;
             transform.localPosition = originPos;
             GravityReset();
             Debug.Log("젤리초기화");
         }
     }
-
+    private void AddScore()
+    {
+        GameDataManager.Instance.score++;
+    }
     // 아이템 튀어오름
     private void ItemAddForce(float power)
     {
@@ -51,7 +58,6 @@ public class GetItem : MonoBehaviour
         rb.gravityScale = 2;
         rb.AddForce(Vector2.up * power, ForceMode2D.Impulse);
         rb.AddForce(Vector2.right * Random.Range(-1,1), ForceMode2D.Impulse);
-        GameDataManager.Instance.score++;
     }
 
 }
