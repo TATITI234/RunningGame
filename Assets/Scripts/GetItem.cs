@@ -7,7 +7,7 @@ public class GetItem : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Vector2 originPos;
-    bool isCollided = false;
+    private bool isCollided = false;
     [SerializeField]private float boundPower;
 
     private void Awake()

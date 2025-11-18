@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
    [SerializeField] private SpriteRenderer sprite;
-    private Vector3 myScale;
+    
 
     [Header("PlayerSetting")]
     [SerializeField] private float jumpPower;
@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     private bool falling;
     private float curTime = 0;
     private bool isCrouch = false;
-
+    private Vector3 myScale;
+    public GameObject effectObj;
 
     private void Awake()
     {
@@ -122,6 +123,11 @@ public class PlayerController : MonoBehaviour
             jumpCount = 0;
             Debug.Log("ÂøÁö");
             isJumping = false;
+        }
+        if (CheckObjectTigger(collision, "DeadZone"))
+        {
+            Debug.Log("»ç¸Á");
+            effectObj.GetComponent<DeadZone>().Dead();
         }
         if (!CheckObjectTigger(collision, "Enemy") && !CheckObjectTigger(collision, "°¡½Ã"))
             return;
