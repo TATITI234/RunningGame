@@ -13,6 +13,6 @@ public class SawMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(new Vector3(0, 0, 5));
+        transform.Rotate(new Vector3(0, 0, 1));
     }
 }

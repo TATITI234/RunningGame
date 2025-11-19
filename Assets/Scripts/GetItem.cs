@@ -26,6 +26,8 @@ public class GetItem : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (GameStateManager.Instance.currentState != GameStateManager.GameState.Playing)
+            return;
         if(collision.CompareTag("Player") && !isCollided)
         {
             isCollided = true;
@@ -37,7 +39,9 @@ public class GetItem : MonoBehaviour
     }
     private void Update()
     {
-        if(transform.position.y <= -5.5f)
+        if (GameStateManager.Instance.currentState != GameStateManager.GameState.Playing)
+            return;
+        if (transform.position.y <= -5.5f)
         {
             isCollided = false;
             transform.localPosition = originPos;
@@ -47,7 +51,7 @@ public class GetItem : MonoBehaviour
     }
     private void AddScore()
     {
-        GameDataManager.Instance.score++;
+        GameDataManager.Instance.score += GameDataManager.Instance.jellyPoint;
     }
     // 아이템 튀어오름
     private void ItemAddForce(float power)

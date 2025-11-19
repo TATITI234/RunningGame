@@ -14,5 +14,7 @@ public class GameDataManager : MonoBehaviour
     public float speed = 2;   // 블록 스피드
     public float blockSize = 20;   // 블록 크기 
     public float score = 0; // 점수
+    public float hp = 100; // 체력
+    public float jellyPoint = 100; // 젤리 점수
 
 }

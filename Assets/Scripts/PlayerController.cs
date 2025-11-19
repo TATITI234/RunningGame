@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
     private float curTime = 0;
     private bool isCrouch = false;
     private Vector3 myScale;
-    public GameObject effectObj;
+    private float time = 0f;
+
 
     private void Awake()
     {
@@ -38,6 +39,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (GameStateManager.Instance.currentState != GameStateManager.GameState.Playing)
+            isMove = false;
+
         if (!isMove)
             return;
 
@@ -58,8 +62,23 @@ public class PlayerController : MonoBehaviour
             //Debug.Log(falling);
 
         }
+
         // 점프 카운트 디버깅 씹
         DebugingJump();
+
+        // 체력 감소 로직
+        time += Time.deltaTime;
+        if (time >= 1)
+        {
+            GameDataManager.Instance.hp -= 5;
+            time = 0;
+        }
+
+        // 사망 체크
+        if (GameDataManager.Instance.hp <= 0 && !isJumping)
+        {
+            Dead();
+        }
     }
 
     private void CheckJump()
@@ -127,7 +146,7 @@ public class PlayerController : MonoBehaviour
         if (CheckObjectTigger(collision, "DeadZone"))
         {
             Debug.Log("사망");
-            effectObj.GetComponent<DeadZone>().Dead();
+            Dead();
         }
         if (!CheckObjectTigger(collision, "Enemy") && !CheckObjectTigger(collision, "가시"))
             return;
@@ -167,5 +186,13 @@ public class PlayerController : MonoBehaviour
     {
         jmpCntTxt.text = jumpCount.ToString();
 
+    }
+
+    private void Dead()
+    {
+        GameDataManager.Instance.speed = 0;
+        isMove = false;
+        GameStateManager.Instance.currentState = GameStateManager.GameState.GameOver;
+        animator.Play("DeadAnimation");
     }
 }
